@@ -1,0 +1,111 @@
+<!doctype html>
+<!-- See http://www.firepad.io/docs/ for detailed embedding docs. -->
+<html>
+<head>
+  <meta charset="utf-8" />
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+  <!-- ACE and its JavaScript mode and theme files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/mode-javascript.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/theme-textmate.js"></script>
+
+  <!-- Firepad -->
+  <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
+  <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <style>
+    html { height: 100%; }
+    body { margin: 0; height: 100%; position: relative; }
+    /* Height / width / positioning can be customized for your use case.
+       For demo purposes, we make firepad fill the entire browser. */
+    #firepad-container {
+      width: 1000px;
+      height: 100%;
+      margin-left: 200px;
+      border: 1px solid #c9c9c9;
+    }
+
+    #left-panel {
+      border: 1px solid #c9c9c9;
+      margin-left: 0px;
+      width: 200px;
+      height: 100%;
+      position: absolute;
+    }
+
+    #right-panel {
+      border: 1px solid #c9c9c9;
+      width: 400px;
+      height: 100%;
+      margin-left: 1200px;
+      margin-top: 40px
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body onload="init()">
+  <div id="title">
+    <h1>Testing Title</h1>
+  </div>
+  <div id="left-panel">
+    <button type="button" class="btn btn-primary btn-lg" style="width:100%; margin-top: 50px">Save</button>
+    <button type="button" class="btn btn-primary btn-lg" style="width:100%;">Revert</button>
+    <button type="button" class="btn btn-primary btn-lg" style="width:100%;">Run</button>
+  </div>
+  <div id="firepad-container"></div>
+  <div id="right-panel">
+    test
+  </div>
+  <script>
+    function init() {
+      //// Initialize Firebase.
+      //// TODO: replace with your Firebase project configuration.
+      var config = {
+        apiKey: "AIzaSyC_JdByNm-E1CAJUkePsr-YJZl7W77oL3g",
+        authDomain: "firepad-tests.firebaseapp.com",
+        databaseURL: "https://firepad-tests.firebaseio.com"
+      };
+      firebase.initializeApp(config);
+      //// Get Firebase Database reference.
+      var firepadRef = getExampleRef();
+      //// Create ACE
+      var editor = ace.edit("firepad-container");
+      editor.setTheme("ace/theme/textmate");
+      var session = editor.getSession();
+      session.setUseWrapMode(true);
+      session.setUseWorker(false);
+      session.setMode("ace/mode/javascript");
+      //// Create Firepad.
+      var firepad = Firepad.fromACE(firepadRef, editor, {
+        defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}'
+      });
+    }
+    // Helper to get hash from end of URL or generate a random one.
+    function getExampleRef() {
+      var ref = firebase.database().ref();
+      var hash = window.location.hash.replace(/#/g, '');
+      if (hash) {
+        ref = ref.child(hash);
+      } else {
+        ref = ref.push(); // generate unique location.
+        window.location = window.location + '#' + ref.key; // add it as a hash to the URL.
+      }
+      if (typeof console !== 'undefined') {
+        console.log('Firebase data: ', ref.toString());
+      }
+      return ref;
+    }
+  </script>
+</body>
+</html>
