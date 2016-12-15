@@ -2,12 +2,12 @@ function init() {
   //// Initialize Firebase.
   //// TODO: replace with your Firebase project configuration.
   var config = {
-    apiKey: "AIzaSyC_JdByNm-E1CAJUkePsr-YJZl7W77oL3g",
-    authDomain: "firepad-tests.firebaseapp.com",
-    databaseURL: "https://firepad-tests.firebaseio.com"
+        apiKey: "AIzaSyDdMbehd1XnIMu8oGTWkoylBjQoZVOQwqE",
+        authDomain: "team17-62680.firebaseapp.com",
+        databaseURL: "https://team17-62680.firebaseio.com"
   };
   firebase.initializeApp(config);
-  //// Get Firebase Database reference.
+  // Get Firebase Database reference.
   var firepadRef = getExampleRef();
   //// Create ACE
   var editor = ace.edit("firepad-container");
