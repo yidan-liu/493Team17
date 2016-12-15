@@ -33,6 +33,17 @@
   <button type="button" class="btn btn-default btn-lg">Save</button>
 
   <script>
+    var version = '';
+    var firepad;
+
+    function saveVersion() {
+      version = firepad.getText();
+    }
+
+    function revertVersion() {
+      firepad.setText(version);
+    }
+    
     function init() {
       //// Initialize Firebase.
       //// TODO: replace with your Firebase project configuration.
@@ -55,7 +66,7 @@
       // Create a random ID to use as our user ID (we must give this to firepad and FirepadUserList).
       var userId = Math.floor(Math.random() * 9999999999).toString();
       //// Create Firepad.
-      var firepad = Firepad.fromACE(firepadRef, editor, {
+      firepad = Firepad.fromACE(firepadRef, editor, {
         defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}',
         userId:userId
       });
