@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
 
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
   <!-- Include example userlist script / CSS.
        Can be downloaded from: https://github.com/firebase/firepad/tree/master/examples/ -->
   <script src="firepad-userlist.js"></script>
@@ -28,9 +31,14 @@
 </head>
 
 <body onload="init()">
-  <div id="userlist"></div>
+  <div id="left-panel">
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;">Save</button>
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;">Revert</button>
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;">Run</button>
+  </div>
   <div id="firepad-container"></div>
-  <button type="button" class="btn btn-default btn-lg">Save</button>
+  <div id="userlist"></div>
+  
 
   <script>
     function init() {

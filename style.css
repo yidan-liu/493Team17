@@ -11,13 +11,13 @@ body { margin: 0; height: 100%; position: relative; }
 }
 
 .btn-lg {
-  position: absolute;
-  margin-top: 10px;
+  position: relative;
+  margin-top: 5px;
 }
 
 #userlist {
   position: absolute;
-  left: 0;
+  left: 720px;
   top: 0;
   bottom: 0;
   height: auto;
@@ -25,7 +25,6 @@ body { margin: 0; height: 100%; position: relative; }
 }
 
 #left-panel {
-  border: 1px solid #c9c9c9;
   margin-left: 0px;
   width: 200px;
   height: 100%;
