@@ -30,7 +30,8 @@
 <body onload="init()">
   <div id="userlist"></div>
   <div id="firepad-container"></div>
-  <button type="button" class="btn btn-default btn-lg">Save</button>
+  <button type="button" class="btn btn-default btn-lg" id="save-btn" onclick="saveVersion()">Save</button>
+  <button type="button" class="btn btn-default btn-lg" id="revert-btn" onclick="revertVersion()">Revert</button>
 
   <script>
     var version = '';
