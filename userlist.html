@@ -57,7 +57,7 @@
     var firepadRef;
     $(document).ready(function(){
       initFirepad();
-      initChat("test-user");
+      initChat();
 
     });
     
@@ -74,7 +74,7 @@
       var messagesRef = firepadRef.child('messages');
       messagesRef.off();
 
-      var box = $("#chat_div").chatbox({id: chat_username, 
+      var box = $("#chat_div").chatbox({id: username, 
                                     user:{key : "value"},
                                     title : "Chat",
                                     messageSent : function(id, user, msg) {
@@ -82,14 +82,13 @@
                                           name: id,
                                           text: msg
                                         });
-                                        //$("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
                                     }});
 
       
 
       var setMessage = function(data) {
         var val = data.val();
-        console.log(val);
+        //console.log(val);
         $("#chat_div").chatbox("option", "boxManager").addMsg(val.name, val.text);
       };
       messagesRef.limitToLast(12).on('child_added', setMessage);
@@ -99,7 +98,6 @@
     
     function initFirepad() {
       //// Initialize Firebase.
-      //// TODO: replace with your Firebase project configuration.
       var config = {
         apiKey: "AIzaSyDdMbehd1XnIMu8oGTWkoylBjQoZVOQwqE",
         authDomain: "team17-62680.firebaseapp.com",
@@ -127,15 +125,25 @@
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId);
 
-      var lastUserRef = firepadRef.child('users').limitToLast(1);
-      lastUserRef.on("value", function(data) {
-         console.log(data.val());
-         console.log(data.val()[userId.toString()]["name"]);
-         username = data.val()[userId.toString()]["name"];
+      var currUserRef = firepadRef.child('users/' + userId);
+
+      // Update chat userId once with assigned Guest name
+      currUserRef.once("value").then(function(snapshot) {
+         console.log(snapshot.val()['name']);
+         username = snapshot.val()['name'];
          $("#chat_div").chatbox("option", "id", username);
       }, function (error) {
          console.log("Error: " + error.code);
       });
+
+      // then track chat name changes 
+      var changeName = function(data) {
+        var val = data.val();
+        console.log(val);
+        username = val;
+        $("#chat_div").chatbox("option", "id", val);
+      };
+      currUserRef.on('child_changed', changeName);
     }
 
     // Helper to get hash from end of URL or generate a random one.
