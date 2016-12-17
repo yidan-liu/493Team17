@@ -250,7 +250,7 @@
             this.uiChatboxInputBox.css("width", (width - 18) + "px");
         },
         _position: function(offset) {
-            this.uiChatbox.css("right", offset);
+            this.uiChatbox.css("left", offset);
         }
     });
 }(jQuery));

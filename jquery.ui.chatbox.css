@@ -5,6 +5,7 @@
     padding: 2px;
     background:  #CCCCCC;
     z-index: 10;
+    left:0;
 }
 
 .ui-chatbox-titlebar {
