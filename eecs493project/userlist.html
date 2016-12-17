@@ -69,7 +69,7 @@
     }
 
     function initChat(chat_username) {
-      var box = $("#chat_div").chatbox({id: username, 
+      var box = $("#chat_div").chatbox({id: chat_username, 
                                     user:{key : "value"},
                                     title : "test chat",
                                     messageSent : function(id, user, msg) {
@@ -111,7 +111,7 @@
          console.log(data.val());
          console.log(data.val()[userId.toString()]["name"]);
          username = data.val()[userId.toString()]["name"];
-         $("#chat_div").chatbox("option", "user", username);
+         $("#chat_div").chatbox("option", "id", username);
       }, function (error) {
          console.log("Error: " + error.code);
       });
