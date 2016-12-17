@@ -18,33 +18,58 @@
 
   <!-- Firepad -->
 <!--  <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" /> -->
-  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+  <!-- JQuery Chat -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
+    <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
+
   <!-- Include example userlist script / CSS.
        Can be downloaded from: https://github.com/firebase/firepad/tree/master/examples/ -->
-  <script id="cid0020000142755306499" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 200px;height: 300px;">{"handle":"uidve","arch":"js","styles":{"a":"CC0000","b":100,"c":"FFFFFF","d":"FFFFFF","k":"CC0000","l":"CC0000","m":"CC0000","n":"FFFFFF","p":"10","q":"CC0000","r":100,"pos":"br","cv":1,"cvbg":"CC0000","cvw":200,"cvh":30,"ticker":1,"fwtickm":1}}</script>
   
-  <script src="/static/js/firepad-userlist.js"></script>
-  <link rel="stylesheet" href="/static/css/firepad-userlist.css" />
+  <script src="firepad-userlist.js"></script>
+  <link rel="stylesheet" href="firepad-userlist.css" />
+
+
 </head>
 
-<body onload="init()">
+<body>
   <div id="left-panel">
+    <h1 id="title">Team 17</h1>
+    <hr>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;">Run</button>
+    <hr>
   </div>
   <div id="firepad-container"></div>
   <div id="userlist"></div>
+  <div id="chat_div"></div>
+  <div id="console"></div>
   
   <script>
+    var username = "test";
     var version = '';
     var firepad;
+    var firepadRef;
+    $(document).ready(function(){
+      initFirepad();
+      initChat();
 
+    });
+
+    $("#firepad-container").resizable();
+    $('#firepad-container').resize(function(){
+       $('#console').height($(window).height()-$("#firepad-container").height()); 
+    });
+    
     function saveVersion() {
       version = firepad.getText();
     }
@@ -52,10 +77,36 @@
     function revertVersion() {
       firepad.setText(version);
     }
+
+    function initChat(chat_username) {
+      // insert existing messages
+      var messagesRef = firepadRef.child('messages');
+      messagesRef.off();
+
+      var box = $("#chat_div").chatbox({id: username, 
+                                    user:{key : "value"},
+                                    title : "Chat",
+                                    messageSent : function(id, user, msg) {
+                                        messagesRef.push({
+                                          name: id,
+                                          text: msg
+                                        });
+                                    }});
+
+      
+
+      var setMessage = function(data) {
+        var val = data.val();
+        //console.log(val);
+        $("#chat_div").chatbox("option", "boxManager").addMsg(val.name, val.text);
+      };
+      messagesRef.limitToLast(12).on('child_added', setMessage);
+      messagesRef.limitToLast(12).on('child_changed', setMessage);
+
+    }
     
-    function init() {
+    function initFirepad() {
       //// Initialize Firebase.
-      //// TODO: replace with your Firebase project configuration.
       var config = {
         apiKey: "AIzaSyDdMbehd1XnIMu8oGTWkoylBjQoZVOQwqE",
         authDomain: "team17-62680.firebaseapp.com",
@@ -63,7 +114,7 @@
       };
       firebase.initializeApp(config);
       //// Get Firebase Database reference.
-      var firepadRef = getExampleRef();
+      firepadRef = getExampleRef();
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
@@ -82,11 +133,32 @@
       //// Create FirepadUserList (with our desired userId).
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId);
+
+      var currUserRef = firepadRef.child('users/' + userId);
+
+      // Update chat userId once with assigned Guest name
+      currUserRef.once("value").then(function(snapshot) {
+         console.log(snapshot.val()['name']);
+         username = snapshot.val()['name'];
+         $("#chat_div").chatbox("option", "id", username);
+      }, function (error) {
+         console.log("Error: " + error.code);
+      });
+
+      // then track chat name changes 
+      var changeName = function(data) {
+        var val = data.val();
+        console.log(val);
+        username = val;
+        $("#chat_div").chatbox("option", "id", val);
+      };
+      currUserRef.on('child_changed', changeName);
     }
 
     // Helper to get hash from end of URL or generate a random one.
     function getExampleRef() {
       var ref = firebase.database().ref();
+      //ref.remove();
       var hash = window.location.hash.replace(/#/g, '');
       if (hash) {
         ref = ref.child(hash);
