@@ -33,7 +33,7 @@ body { margin: 0; height: 100%; position: relative; }
 
 #userlist {
   position: absolute;
-  top: 295px;
+  top: 345px;
   height: auto;
   width: 15%;
 }
@@ -50,5 +50,37 @@ body { margin: 0; height: 100%; position: relative; }
 @media screen and ( max-width: 1166px ){
     #firepad-container { margin-left: 175px; }
     #console {margin-left: 175px; }
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown:hover #dropbtn {
+    background-color: #616468;
 }
 
