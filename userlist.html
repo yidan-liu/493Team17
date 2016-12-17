@@ -27,7 +27,7 @@
   <!-- JQuery Chat -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
 
@@ -54,6 +54,7 @@
     var username = "test";
     var version = '';
     var firepad;
+    var firepadRef;
     $(document).ready(function(){
       initFirepad();
       initChat("test-user");
@@ -69,12 +70,31 @@
     }
 
     function initChat(chat_username) {
+      // insert existing messages
+      var messagesRef = firepadRef.child('messages');
+      messagesRef.off();
+
       var box = $("#chat_div").chatbox({id: chat_username, 
                                     user:{key : "value"},
-                                    title : "test chat",
+                                    title : "Chat",
                                     messageSent : function(id, user, msg) {
-                                        $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+                                        messagesRef.push({
+                                          name: id,
+                                          text: msg
+                                        });
+                                        //$("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
                                     }});
+
+      
+
+      var setMessage = function(data) {
+        var val = data.val();
+        console.log(val);
+        $("#chat_div").chatbox("option", "boxManager").addMsg(val.name, val.text);
+      };
+      messagesRef.limitToLast(12).on('child_added', setMessage);
+      messagesRef.limitToLast(12).on('child_changed', setMessage);
+
     }
     
     function initFirepad() {
@@ -87,7 +107,7 @@
       };
       firebase.initializeApp(config);
       //// Get Firebase Database reference.
-      var firepadRef = getExampleRef();
+      firepadRef = getExampleRef();
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
