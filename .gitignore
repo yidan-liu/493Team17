@@ -1,0 +1,6 @@
+*.pyc
+*.png
+.DS_Store
+.DS_Store?
+static/
+jquery.ui.chatbox-master/

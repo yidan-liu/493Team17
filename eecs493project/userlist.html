@@ -56,8 +56,8 @@
     var firepad;
 
     $(document).ready(function(){
-      // $.when(initFirepad()).then(initChat(username));
       initFirepad();
+      initChat("test-user");
 
     });
     
@@ -111,7 +111,7 @@
          console.log(data.val());
          console.log(data.val()[userId.toString()]["name"]);
          username = data.val()[userId.toString()]["name"];
-         initChat(username);
+         $("#chat_div").chatbox("option", "user", username);
       }, function (error) {
          console.log("Error: " + error.code);
       });
@@ -131,13 +131,6 @@
         console.log('Firebase data: ', ref.toString());
       }
       return ref;
-    }
-
-    function getUsernameFromList(userId) {
-      return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-        var username = snapshot.val().name;
-        // ...
-      });
     }
 
   </script>
