@@ -49,6 +49,13 @@
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;">Run</button>
+    <div class="dropdown">
+      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Dropdown</button>
+      <div class="dropdown-content">
+        <a onclick="changeLanguage(javascript)">JavaScript</a>
+        <a onclick="changeLanguage(html)">HTML</a>
+      </div>
+    </div>
     <hr>
   </div>
   <div id="firepad-container"></div>
@@ -61,11 +68,17 @@
     var version = '';
     var firepad;
     var firepadRef;
+    var session; 
+    
     $(document).ready(function(){
       initFirepad();
       initChat();
 
     });
+    
+    function changeLanguage(language) {
+      session.setMode("ace/mode/" + language);
+    }
 
     $("#firepad-container").resizable();
     $('#firepad-container').resize(function(){
@@ -120,7 +133,7 @@
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
-      var session = editor.getSession();
+      session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
       session.setMode("ace/mode/javascript");
