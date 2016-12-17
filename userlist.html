@@ -6,7 +6,6 @@
   <meta charset="utf-8" />
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
  <!-- ACE and its JavaScript mode and theme files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
@@ -50,6 +49,13 @@
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" onclick="run()" style="width:100%;">Run</button>
+    <div class="dropdown">
+      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Dropdown</button>
+      <div class="dropdown-content">
+        <a onclick="changeLanguage(javascript)">JavaScript</a>
+        <a onclick="changeLanguage(html)">HTML</a>
+      </div>
+    </div>
     <hr>
   </div>
   <div id="firepad-container"></div>
@@ -65,10 +71,18 @@
     var version = '';
     var firepad;
     var firepadRef;
+    var session; 
+    
     $(document).ready(function(){
       initFirepad();
       initChat();
+
     });
+    
+    function changeLanguage(language) {
+      session.setMode("ace/mode/" + language);
+    }
+
     $("#firepad-container").resizable();
     $('#firepad-container').resize(function(){
        $('#console').height($(window).height()-$("#firepad-container").height()); 
@@ -77,6 +91,7 @@
     function saveVersion() {
       version = firepad.getText();
     }
+
     function revertVersion() {
       firepad.setText(version);
     }
@@ -85,13 +100,13 @@
       var excute_code = firepad.getText()
       var result = eval(excute_code)
       $('#print-output').html(result)
-
-
     }
+
     function initChat(chat_username) {
       // insert existing messages
       var messagesRef = firepadRef.child('messages');
       messagesRef.off();
+
       var box = $("#chat_div").chatbox({id: username, 
                                     user:{key : "value"},
                                     title : "Chat",
@@ -101,7 +116,9 @@
                                           text: msg
                                         });
                                     }});
+
       
+
       var setMessage = function(data) {
         var val = data.val();
         //console.log(val);
@@ -109,6 +126,7 @@
       };
       messagesRef.limitToLast(12).on('child_added', setMessage);
       messagesRef.limitToLast(12).on('child_changed', setMessage);
+
     }
     
     function initFirepad() {
@@ -124,10 +142,11 @@
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
-      var session = editor.getSession();
+      session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
       session.setMode("ace/mode/javascript");
+
       // Create a random ID to use as our user ID (we must give this to firepad and FirepadUserList).
       var userId = Math.floor(Math.random() * 9999999999).toString();
       //// Create Firepad.
@@ -138,7 +157,9 @@
       //// Create FirepadUserList (with our desired userId).
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId);
+
       var currUserRef = firepadRef.child('users/' + userId);
+
       // Update chat userId once with assigned Guest name
       currUserRef.once("value").then(function(snapshot) {
          console.log(snapshot.val()['name']);
@@ -147,6 +168,7 @@
       }, function (error) {
          console.log("Error: " + error.code);
       });
+
       // then track chat name changes 
       var changeName = function(data) {
         var val = data.val();
@@ -156,6 +178,7 @@
       };
       currUserRef.on('child_changed', changeName);
     }
+
     // Helper to get hash from end of URL or generate a random one.
     function getExampleRef() {
       var ref = firebase.database().ref();
@@ -172,6 +195,7 @@
       }
       return ref;
     }
+
   </script>
 </body>
 </html>
