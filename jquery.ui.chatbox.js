@@ -21,7 +21,7 @@
             user: null, // can be anything associated with this chatbox
             hidden: false,
             offset: 0, // relative to right edge of the browser window
-            width: "100%", // width of the chatbox
+            // width: "100%", // width of the chatbox
             messageSent: function(id, user, msg) {
                 // override this
                 this.boxManager.addMsg(user.first_name, msg);
@@ -242,12 +242,12 @@
             }
             $.Widget.prototype._setOption.apply(this, arguments);
         },
-        _setWidth: function(width) {
-            this.uiChatboxTitlebar.css("width", width);
-            this.uiChatboxLog.css("width", width);
-            // padding:2, boarder:2, margin:5
-            this.uiChatboxInputBox.css("width", (width - 2));
-        },
+        // _setWidth: function(width) {
+        //     this.uiChatboxTitlebar.css("width", width);
+        //     this.uiChatboxLog.css("width", width);
+        //     // padding:2, boarder:2, margin:5
+        //     this.uiChatboxInputBox.css("width", (width - 2));
+        // },
         _position: function(offset) {
             this.uiChatbox.css("left", offset);
         }
