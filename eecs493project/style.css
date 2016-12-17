@@ -39,3 +39,11 @@ body { margin: 0; height: 100%; position: relative; }
   margin-top: 40px;
   position: absolute;
 }
+
+#output {
+  position: absolute;
+  width: 500px;
+  height: 30%;
+  margin-left: 200px;
+  bottom: 0;
+}
