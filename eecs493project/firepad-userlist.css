@@ -2,7 +2,8 @@
   /* default height */
   height: 400px;
   min-width: 175px;
-  border: 2px solid black;
+  border-top: 1px solid #c9c9c9;
+  border-bottom: 1px solid #c9c9c9; 
 }
 
 .firepad-userlist {
@@ -17,6 +18,7 @@
   font-size: 12px;
   font-weight: bold;
   border-bottom: 2px solid #c9c9c9;
+    border-radius: 25px;
 }
 
 .firepad-userlist-users {
