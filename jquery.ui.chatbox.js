@@ -139,11 +139,11 @@
                     return false;
                 })
                 .appendTo(uiChatboxTitlebar),
-            uiChatboxTitlebarCloseText = $('<span></span>')
-                .addClass('ui-icon ' +
-                          'ui-icon-closethick')
-                .text('close')
-                .appendTo(uiChatboxTitlebarClose),
+            // uiChatboxTitlebarCloseText = $('<span></span>')
+            //     .addClass('ui-icon ' +
+            //               'ui-icon-closethick')
+            //     .text('close')
+            //     .appendTo(uiChatboxTitlebarClose),
             uiChatboxTitlebarMinimize = (self.uiChatboxTitlebarMinimize = $('<a href="#"></a>'))
                 .addClass('ui-corner-all ' +
                           'ui-chatbox-icon'
@@ -250,7 +250,7 @@
             this.uiChatboxInputBox.css("width", (width - 18) + "px");
         },
         _position: function(offset) {
-            this.uiChatbox.css("right", offset);
+            this.uiChatbox.css("left", offset);
         }
     });
 }(jQuery));

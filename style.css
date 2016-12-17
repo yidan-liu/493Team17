@@ -1,0 +1,54 @@
+html { height: 100%; }
+body { margin: 0; height: 100%; position: relative; }
+/* Height / width / positioning can be customized for your use case. For demo purposes, we make firepad fill the entire browser. */
+
+#firepad-container {
+  width: 85%;
+  height: 75%;
+  margin-left: 15%;
+  border-top: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  border-left: 1px solid #c9c9c9;
+  position: absolute; left: 0; top: 0; bottom: 0; right: 0;
+  min-width: 600px;
+}
+
+#console {
+  width: 85%;
+  height: 25%;
+  margin-left: 15%;
+  border: 1px solid #c9c9c9;
+  position: absolute; bottom: 0;
+  min-width: 600px;
+}
+
+#title {
+  text-align: center;
+}
+
+.btn-lg {
+  position: relative;
+  margin-top: 5px;
+}
+
+#userlist {
+  position: absolute;
+  top: 295px;
+  height: auto;
+  width: 15%;
+}
+
+#left-panel {
+  margin-left: 0px;
+  width: 15%;
+  height: 100%;
+  position: absolute;
+  min-width: 175px;
+  float: left;
+}
+
+@media screen and ( max-width: 1166px ){
+    #firepad-container { margin-left: 175px; }
+    #console {margin-left: 175px; }
+}
+

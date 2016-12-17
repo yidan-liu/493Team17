@@ -5,10 +5,8 @@
 <head>
   <meta charset="utf-8" />
   <!-- Firebase -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-  <script src="https://repl.it/lib/api.js" type="text/javascript" charset="utf-8"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
  <!-- ACE and its JavaScript mode and theme files -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js"></script>
@@ -30,7 +28,7 @@
   <!-- JQuery Chat -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
 
@@ -45,26 +43,33 @@
 
 <body>
   <div id="left-panel">
+    <h1 id="title">Team 17</h1>
+    <hr>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" onclick="run()" style="width:100%;">Run</button>
+    <hr>
   </div>
   <div id="firepad-container"></div>
   <div id="userlist"></div>
   <div id="chat_div"></div>
-  <div id="output">
-    <p>Terminal:</p>
-    <textarea id="out" rows="4" cols="80"></textarea>
+  <div id="console">
+    Output:
+    <p id="print-output" style="margin-left: 5px"></p>
   </div>
   
   <script>
     var username = "test";
     var version = '';
     var firepad;
-
+    var firepadRef;
     $(document).ready(function(){
       initFirepad();
-      initChat("test-user");
+      initChat();
+    });
+    $("#firepad-container").resizable();
+    $('#firepad-container').resize(function(){
+       $('#console').height($(window).height()-$("#firepad-container").height()); 
     });
     
     function saveVersion() {
@@ -75,24 +80,37 @@
     }
 
     function run() {
-      version = firepad.getText();
-      var result = eval(version)
-      $("#out").html(result)
+      var excute_code = firepad.getText()
+      var result = eval(excute_code)
+      $('#print-output').html(result)
+
 
     }
-
     function initChat(chat_username) {
-      var box = $("#chat_div").chatbox({id: chat_username, 
+      // insert existing messages
+      var messagesRef = firepadRef.child('messages');
+      messagesRef.off();
+      var box = $("#chat_div").chatbox({id: username, 
                                     user:{key : "value"},
-                                    title : "test chat",
+                                    title : "Chat",
                                     messageSent : function(id, user, msg) {
-                                        $("#chat_div").chatbox("option", "boxManager").addMsg(id, msg);
+                                        messagesRef.push({
+                                          name: id,
+                                          text: msg
+                                        });
                                     }});
+      
+      var setMessage = function(data) {
+        var val = data.val();
+        //console.log(val);
+        $("#chat_div").chatbox("option", "boxManager").addMsg(val.name, val.text);
+      };
+      messagesRef.limitToLast(12).on('child_added', setMessage);
+      messagesRef.limitToLast(12).on('child_changed', setMessage);
     }
     
     function initFirepad() {
       //// Initialize Firebase.
-      //// TODO: replace with your Firebase project configuration.
       var config = {
         apiKey: "AIzaSyDdMbehd1XnIMu8oGTWkoylBjQoZVOQwqE",
         authDomain: "team17-62680.firebaseapp.com",
@@ -100,7 +118,7 @@
       };
       firebase.initializeApp(config);
       //// Get Firebase Database reference.
-      var firepadRef = getExampleRef();
+      firepadRef = getExampleRef();
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
@@ -118,16 +136,23 @@
       //// Create FirepadUserList (with our desired userId).
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId);
-
-      var lastUserRef = firepadRef.child('users').limitToLast(1);
-      lastUserRef.on("value", function(data) {
-         //console.log(data.val());
-         //console.log(data.val()[userId.toString()]["name"]);
-         username = data.val()[userId.toString()]["name"];
+      var currUserRef = firepadRef.child('users/' + userId);
+      // Update chat userId once with assigned Guest name
+      currUserRef.once("value").then(function(snapshot) {
+         console.log(snapshot.val()['name']);
+         username = snapshot.val()['name'];
          $("#chat_div").chatbox("option", "id", username);
       }, function (error) {
-         //console.log("Error: " + error.code);
+         console.log("Error: " + error.code);
       });
+      // then track chat name changes 
+      var changeName = function(data) {
+        var val = data.val();
+        console.log(val);
+        username = val;
+        $("#chat_div").chatbox("option", "id", val);
+      };
+      currUserRef.on('child_changed', changeName);
     }
     // Helper to get hash from end of URL or generate a random one.
     function getExampleRef() {
@@ -141,11 +166,10 @@
         window.location = window.location + '#' + ref.key; // add it as a hash to the URL.
       }
       if (typeof console !== 'undefined') {
-        //console.log('Firebase data: ', ref.toString());
+        console.log('Firebase data: ', ref.toString());
       }
       return ref;
     }
-
   </script>
 </body>
 </html>
