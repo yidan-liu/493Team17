@@ -55,7 +55,6 @@
     var version = '';
     var firepad;
     $(document).ready(function(){
-      // $.when(initFirepad()).then(initChat(username));
       initFirepad();
       initChat("test-user");
 
@@ -134,13 +133,6 @@
         console.log('Firebase data: ', ref.toString());
       }
       return ref;
-    }
-
-    function getUsernameFromList(userId) {
-      return firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-        var username = snapshot.val().name;
-        // ...
-      });
     }
 
   </script>
