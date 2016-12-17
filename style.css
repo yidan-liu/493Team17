@@ -33,7 +33,7 @@ body { margin: 0; height: 100%; position: relative; }
 
 #userlist {
   position: absolute;
-  top: 295px;
+  top: 345px;
   height: auto;
   width: 15%;
 }
