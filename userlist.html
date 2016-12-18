@@ -68,14 +68,14 @@ Compile errors and warnings will appear in the terminal on the right side.
 ">?</button>
   <div id="left-panel">
 <div id="title">
-    <h1>CodeLock</h1>        
-<h4>By Team 17 </h4>
+    <h1 style="color: #042037">CodeLock</h1>        
+<h4 style="color: #042037">By Team 17 </h4>
 
 
 </div>
        
 
-    <hr>
+    <hr style="border: 1px solid #708CA5">
     <button type="button" class="btn btn-default btn-lg btn-block" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="run-btn" onclick="run()">Run</button>
@@ -87,7 +87,7 @@ Compile errors and warnings will appear in the terminal on the right side.
       </div>
     </div>
 
-    <hr>
+    <hr style="border: 1px solid #708CA5">
   </div>
   <div id="firepad-container"></div>
   <div id="userlist"></div>
@@ -155,7 +155,7 @@ Compile errors and warnings will appear in the terminal on the right side.
       }
       else { // if (language == "javascript")
         programming_language = "javascript"
-        console.log(programming_language)
+        // console.log(programming_language)
         $("#dropbtn").html("Javascript &#9662;");
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
         $("#console").css({"width": "85%", "height": "25%", "min-width": "600px", "background-color":"#F0F0F0", "border": "1px solid #FFF"});
