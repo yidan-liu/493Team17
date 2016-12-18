@@ -28,8 +28,12 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script> -->
     <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
   <!-- Include example userlist script / CSS.
        Can be downloaded from: https://github.com/firebase/firepad/tree/master/examples/ -->
@@ -103,13 +107,35 @@ Compile errors and warnings will appear in the terminal on the right side.
     var version = '';
     var firepad;
     var firepadRef;
-    var session; 
+    var session;
+    programming_language = "javascript" 
     
     $(document).ready(function(){
       initFirepad();
       initChat();
-
+      firepad.on('ready', function() {
+        version = firepad.getText();
+      });
     });
+
+    // // keyboard shortcuts
+    // // 'command+shift+s' to save
+    // Mousetrap.bind('command+shift+s', function(e) {
+    //   // your function here...
+    //   saveVersion();
+    // });
+
+    // // 'command+shift+d' to revert
+    // Mousetrap.bind('command+shift+d', function(e) {
+    //   // your function here...
+    //   revertVersion();
+    // });
+
+    // // 'command+shift+r' to run
+    // Mousetrap.bind('command+shift+r', function(e) {
+    //   // your function here...
+    //   run();
+    // });
 
     function toggleCode(lockUnlock) {
 
@@ -118,18 +144,22 @@ Compile errors and warnings will appear in the terminal on the right side.
     function changeLanguage(language) {
       session.setMode("ace/mode/" + language);
       if(language == "html") {
+
+        programming_language = "html"
+        $("#dropbtn").html("HTML &#9662;");
         $("#firepad-container").css({"width": "45%", "height": "100%", "min-width": "300px"});
-        $("#console").css({"width": "40%", "height": "100%", "min-width": "250px"});
+        $("#console").css({"width": "40%", "height": "100%", "min-width": "250px", "background-color":"#FFFFFF", "border-top":"2px solid #a0a0a0", "border-left":"2px solid #a0a0a0"});
         //$("#console-text").html("iframe goes here")
-        $("#frame").attr("srcdoc", firepad.getText());
-        $("#frame").css({"width": "40%", "height": "100%", "min-width": "250px", "display": "initial", "right": "0px", "position":"absolute"});
         $("#console-text").css("display", "none");
         $("#lock-btn").css("display", "none");
       }
       else { // if (language == "javascript")
+        programming_language = "javascript"
+        console.log(programming_language)
+        $("#dropbtn").html("Javascript &#9662;");
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
-        $("#console").css({"width": "85%", "height": "25%", "min-width": "600px"});
-        $("#console-text").html("Output:");
+        $("#console").css({"width": "85%", "height": "25%", "min-width": "600px", "background-color":"#F0F0F0", "border": "1px solid #FFF"});
+        $("#console-text").html("Console:");
         $("#console-text").css("display", "initial");
         $("#frame").css("display", "none");
         $("#lock-btn").css("display", "initial");
@@ -142,23 +172,39 @@ Compile errors and warnings will appear in the terminal on the right side.
     });
     
     function saveVersion() {
-      version = firepad.getText();
+      if (firepad.getText() != '') {
+        version = firepad.getText();
+        toastr.success('Saved as last stable version', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
+      else {
+        toastr.warning('Empty editor, code not saved', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
     }
 
     function revertVersion() {
-      firepad.setText(version);
+      if (version != '') {
+        firepad.setText(version);
+        toastr.success('Reverted to last stable version', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
+      else {
+        toastr.warning('No stabled version saved yet', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
     }
 
     function run() {
-      $('#console').empty();
-      $('#console').append("<p id='console-text'>Console: </p>");
-      var execute_code = firepad.getText()
-      logger(execute_code);
-      var result = eval(execute_code);
-      $('#console').append("<p id='console-text'> >>>  " +result+ "</p>");
-      // $('#print-output').text(">>>  " + result)
+      if (programming_language == "javascript") {
+        $('#console').empty();
+        $('#console').append("<p id='console-text'>Console: </p>");
+        var execute_code = firepad.getText()
+        logger(execute_code);
+        var result = eval(execute_code);
+        $('#console').append("<p id='console-text'> >>>  " +result+ "</p>");
+      }
+      else {
+        $("#frame").attr("srcdoc", firepad.getText());
+        $("#frame").css({"display": "initial"});
+      }
     }
-
     function logger(code) {
       console.log = function(message) {
         // $('#print-output').text(message);
@@ -181,7 +227,9 @@ Compile errors and warnings will appear in the terminal on the right side.
                                         });
                                     }});
 
-      
+
+
+      $("#chat_div").chatbox("option", "boxManager").toggleContent();
 
       var setMessage = function(data) {
         var val = data.val();
@@ -206,6 +254,37 @@ Compile errors and warnings will appear in the terminal on the right side.
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
+
+      // // overwrite keyboard shortcuts in ace
+      // var allCommands = editor.commands.byName; 
+      // editor.commands.removeCommands(allCommands);
+      // editor.commands.addCommand({
+      //   name: 'save',
+      //   bindKey: {win: 'Ctrl-Shift-S', mac: 'Command-Option-S'},
+      //   exec: function(editor) {
+      //     saveVersion();
+      //   },
+      //     readOnly: true
+      //   });
+
+      // editor.commands.addCommand({
+      //   name: 'revert',
+      //   bindKey: {win: 'Ctrl-Shift-D', mac: 'Command-Option-D'},
+      //   exec: function(editor) {
+      //     revertVersion();
+      //   },
+      //     readOnly: true
+      //   });
+
+      // editor.commands.addCommand({
+      //   name: 'run',
+      //   bindKey: {win: 'Ctrl-Shift-R', mac: 'Command-Shift-R'},
+      //   exec: function(editor) {
+      //     run();
+      //   },
+      //     readOnly: true
+      //   });
+
       session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
