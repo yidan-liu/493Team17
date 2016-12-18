@@ -7,16 +7,18 @@
     width: 15%;
     min-width: 175px;
     font-family: sans-serif;
-
+    border-radius: 3px;
 }
 
 .ui-chatbox-titlebar {
     padding: 3px;
     height: 28px;
     cursor: pointer;
-    border-radius: 0px;
-    border: 1px solid #aaa;
+    border: 1px solid #708CA5;
     border-bottom: 0px;
+    background-color: #708CA5;
+    color: #F9FCFF;
+    font-weight: bold;
 }
 
 .ui-chatbox-content {
@@ -31,11 +33,17 @@
     overflow-y: auto;
     overflow-x: hidden;
     background: #FFFFFF;
+    border: 1px solid #708CA5;
+}
+
+.ui-state-hover {
+    background-color: #2A4F6E;
 }
 
 .ui-chatbox-input {
     padding: 3px;
     overflow: hidden;
+    border: 1px solid #708CA5;
 }
 
 .ui-chatbox-input-box {
@@ -49,13 +57,16 @@
 .ui-chatbox-icon {
     float: right;
 }
+.ui-chatbox-icon:hover {
+    background-color: #2A4F6E;
+}
 
 .ui-chatbox-input-focus {
     border-color: #6699FF;
 }
 
 .ui-dialog-header {
-    background-color: #F0F0F0;
+    background-color: #2A4F6E;
 }
 
 .ui-chatbox-msg {
