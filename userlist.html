@@ -42,6 +42,8 @@
   <script src="firepad-userlist.js"></script>
   <link rel="stylesheet" href="firepad-userlist.css" />
 
+  <script src="codelock.js"></script>
+
 
 </head>
 
@@ -101,8 +103,8 @@
   <div id="userlist"></div>
   <div id="chat_div"></div>
   <div id="lock">
-    <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Lock selected code to prevent others from modifying it." onclick="toggleCode()">&#128275;</button>
-    <!-- <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Unlock code to allow others to edit it" onclick="toggleCode()">&#128274;</button> -->
+    <button id="unlock-btn" class="btn btn-default btn-lg" title="Click to Lock selected code to prevent others from modifying it." onclick="toggleCode()">&#128275;</button>
+    <button id="lock-btn" style="display:none" class="btn btn-default btn-lg" title="Click to Unlock code to allow others to edit it" onclick="toggleCode()">&#128274;</button>
   </div>
   <iframe id="frame" style='display:none'></iframe>
   <div id="console" style='position: absolute; font-family: monospace; font-size: 15px; margin-left: 5px'>
@@ -116,6 +118,7 @@
     var firepad;
     var firepadRef;
     var session;
+    var lockid;
     programming_language = "javascript" 
     
     $(document).ready(function(){
@@ -126,8 +129,21 @@
       });
     });
 
-    function toggleCode(lockUnlock) {
+    function initlocktrigger(){
+      initlock(lockid);
+    }
 
+    function toggleCode() {
+      if ($("#lock-btn").css("display") == "none") { //user pressed unlock button
+        $("#lock-btn").css("display", "initial")
+        $("#unlock-btn").css("display", "none")
+        writeLockData();
+
+      } else { //user pressed lock button
+        $("#unlock-btn").css("display", "initial")
+        $("#lock-btn").css("display", "none")
+        deleteLockData();
+      }
     }
     
     function changeLanguage(language) {
@@ -254,6 +270,8 @@
 
       // Create a random ID to use as our user ID (we must give this to firepad and FirepadUserList).
       var userId = Math.floor(Math.random() * 9999999999).toString();
+      lockid = userId;
+      setTimeout(initlocktrigger, 1500);
       //// Create Firepad.
       firepad = Firepad.fromACE(firepadRef, editor, {
         defaultText: '// JavaScript Editing with CodeLock!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}',
