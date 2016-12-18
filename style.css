@@ -5,6 +5,8 @@ body { margin: 0; height: 100%; position: relative; }
 #firepad-container {
   width: 85%;
   height: 75%;
+/*  width: 45%;
+  height: 100%;*/
   margin-left: 15%;
   border-top: 1px solid #c9c9c9;
   border-right: 1px solid #c9c9c9;
@@ -13,9 +15,21 @@ body { margin: 0; height: 100%; position: relative; }
   min-width: 600px;
 }
 
+#lock-btn {
+  font-size: 25px;
+  right: 10px;
+  top: 10px;
+  position: absolute;
+  z-index: 10;
+}
+
 #console {
   width: 85%;
   height: 25%;
+/*  width: 40%;
+  height: 100%;
+  border: 5px solid #c9c9c9;*/
+  right: 0;
   margin-left: 15%;
   border: 1px solid #c9c9c9;
   position: absolute; bottom: 0;
@@ -29,6 +43,13 @@ body { margin: 0; height: 100%; position: relative; }
 .btn-lg {
   position: relative;
   margin-top: 5px;
+  text-align: center;
+}
+
+#console-text {
+  margin-left: 5px;
+  font-family: monospace;
+  font-size: 15px;
 }
 
 #userlist {

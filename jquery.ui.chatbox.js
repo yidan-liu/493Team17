@@ -242,12 +242,12 @@
             }
             $.Widget.prototype._setOption.apply(this, arguments);
         },
-        // _setWidth: function(width) {
-        //     this.uiChatboxTitlebar.css("width", width);
-        //     this.uiChatboxLog.css("width", width);
-        //     // padding:2, boarder:2, margin:5
-        //     this.uiChatboxInputBox.css("width", (width - 2));
-        // },
+        _setWidth: function(width) {
+            // this.uiChatboxTitlebar.css("width", width);
+            // this.uiChatboxLog.css("width", width);
+            // padding:2, boarder:2, margin:5
+            // this.uiChatboxInputBox.css("width", (width - 2));
+        },
         _position: function(offset) {
             this.uiChatbox.css("left", offset);
         }

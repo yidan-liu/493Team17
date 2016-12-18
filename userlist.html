@@ -50,10 +50,10 @@
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" onclick="run()" style="width:100%;">Run</button>
     <div class="dropdown">
-      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Dropdown</button>
+      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Select Language &#9662;</button>
       <div class="dropdown-content">
-        <a onclick="changeLanguage(javascript)">JavaScript</a>
-        <a onclick="changeLanguage(html)">HTML</a>
+        <a onclick="changeLanguage('javascript')">JavaScript</a>
+        <a onclick="changeLanguage('html')">HTML</a>
       </div>
     </div>
     <hr>
@@ -61,9 +61,13 @@
   <div id="firepad-container"></div>
   <div id="userlist"></div>
   <div id="chat_div"></div>
+  <div id="lock">
+    <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128275;</button>
+    <!-- <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128274;</button> -->
+  </div>
   <div id="console">
-    Output:
-    <p id="print-output" style="margin-left: 5px"></p>
+    <p id="console-text">Output:</p>
+    <p id="print-output" style="font-family: monospace; font-size: 15px; margin-left: 5px"></p>
   </div>
   
   <script>
@@ -78,9 +82,31 @@
       initChat();
 
     });
+
+    function toggleCode(lockUnlock) {
+      
+    }
     
     function changeLanguage(language) {
       session.setMode("ace/mode/" + language);
+      if(language == "html") {
+        $("#firepad-container").css("width", "45%")
+        $("#firepad-container").css("height", "100%")
+        $("#firepad-container").css("min-width", "300px")
+        $("#console").css("width", "40%")
+        $("#console").css("height", "100%")
+        $("#console").css("min-width", "250px")
+        $("#console-text").html("iframe goes here")
+      } 
+      else { // if (language == "javascript")
+        $("#firepad-container").css("width", "85%")
+        $("#firepad-container").css("height", "75%")
+        $("#firepad-container").css("min-width", "600px")
+        $("#console").css("width", "85%")
+        $("#console").css("height", "25%")
+        $("#console").css("min-width", "600px")
+        $("#console-text").html("Output:")
+      }
     }
 
     $("#firepad-container").resizable();
@@ -97,9 +123,10 @@
     }
 
     function run() {
+      $('#print-output').text("")
       var excute_code = firepad.getText()
-      var result = eval(excute_code)
-      $('#print-output').html(result)
+      var result = eval(excute_code);
+      $('#print-output').text(">>>  " + result)
     }
 
     function initChat(chat_username) {
