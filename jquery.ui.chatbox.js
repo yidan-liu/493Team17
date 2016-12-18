@@ -77,6 +77,12 @@
                 toggleBox: function() {
                     this.elem.uiChatbox.toggle();
                 },
+                toggleContent: function() {
+                    this.elem.uiChatboxContent.toggle();
+                    if (this.elem.uiChatboxContent.is(":visible")) {
+                        this.elem.uiChatboxInputBox.focus();
+                    }
+                },
                 _scrollToBottom: function() {
                     var box = this.elem.uiChatboxLog;
                     box.scrollTop(box.get(0).scrollHeight);
