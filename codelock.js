@@ -13,7 +13,7 @@ var lockowner;
 
 //sets userid for the session, sets listener for db changes, triggers function to fill in existing locks
 function initlock(userid) {
-    console.log("userid: " + userid);
+    //console.log("userid: " + userid);
     user = userid;
     firebase.database().ref('codelock').on('value', practice);
 }
@@ -24,18 +24,18 @@ function initlock(userid) {
 //if lock is being deleted, or this user is the owner of the new lock, nothing happens
 //else lockowner is set to username and the lock is created in the codelock function
 function practice(data){
-    console.log("in practice");
+    //console.log("in practice");
     var val = data.val();
-     console.log(val['username']);
+     //console.log(val['username']);
     if(val['username'] == "none" || val['username'] == user){
         lockowner = user;
         unlock();
     }
     else{
         lockowner = val['username'];
-        console.log("username not none");
+        //console.log("username not none");
         ranges = val['range'].split(" ");
-        console.log(ranges);
+        //console.log(ranges);
         codelock();
     }
 }
@@ -44,11 +44,11 @@ function practice(data){
 //lock can only be created if set==false
 //creates the marker for highlighting and the keyboard handler for the actual locking useing the range from the db
 function codelock() {
-    console.log("in codelock");
-    console.log(Number(ranges[0]));
+    //console.log("in codelock");
+    //console.log(Number(ranges[0]));
     if(set == false){
         set = true;
-        console.log(ranges);
+        //console.log(ranges);
         var editor     = ace.edit("firepad-container")
             , session  = editor.getSession()
             , Range    = require("ace/range").Range
@@ -56,21 +56,21 @@ function codelock() {
             , markerId = session.addMarker(range, "readonly-highlight");
       //  range2 = range;
         id = markerId;
-        console.log(range);
+        //console.log(range);
         session.setMode("ace/mode/javascript");
         locker = {
             handleKeyboard : function(data, hash, keyString, keyCode, event) {
-                console.log("handler");
+                //console.log("handler");
                 if (hash === -1 || (keyCode <= 40 && keyCode >= 37)) return false;
 
                 if (intersects(range)) {
-                    console.log("actually intersects");
+                    //console.log("actually intersects");
                     return {command:"null", passEvent:false};
                 }
             }
         }
         editor.keyBinding.addKeyboardHandler(locker);
-        console.log(editor.getKeyboardHandler())
+        //console.log(editor.getKeyboardHandler())
         before(editor, 'onPaste', preventReadonly);
         before(editor, 'onCut',   preventReadonly);
 
@@ -91,13 +91,13 @@ function codelock() {
         }
 
         function intersects(range) {
-            console.log(editor.getSelectionRange());
-            console.log(range);
+            //console.log(editor.getSelectionRange());
+            //console.log(range);
             return editor.getSelectionRange().intersects(range);
         }
 
         function preventReadonly(next, args) {
-            console.log("preventReadonly");
+            //console.log("preventReadonly");
             if (intersects(range)) return;
             next();
         }
@@ -118,7 +118,7 @@ function writeLockData() {
         set = true;
       var range = ace.edit("firepad-container").getSelectionRange();
       var rangestring = range['start']['row'] + " " + range['start']['column'] + " " + range['end']['row'] + " " + range['end']['column'];
-      console.log(rangestring);
+      //console.log(rangestring);
       firebase.database().ref('codelock').set({
         username: user,
         range: rangestring,
