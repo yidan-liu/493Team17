@@ -28,8 +28,12 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script> -->
     <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
   <!-- Include example userlist script / CSS.
        Can be downloaded from: https://github.com/firebase/firepad/tree/master/examples/ -->
@@ -110,6 +114,25 @@ Compile errors and warnings will appear in the terminal on the right side.
 
     });
 
+    // // keyboard shortcuts
+    // // 'command+shift+s' to save
+    // Mousetrap.bind('command+shift+s', function(e) {
+    //   // your function here...
+    //   saveVersion();
+    // });
+
+    // // 'command+shift+d' to revert
+    // Mousetrap.bind('command+shift+d', function(e) {
+    //   // your function here...
+    //   revertVersion();
+    // });
+
+    // // 'command+shift+r' to run
+    // Mousetrap.bind('command+shift+r', function(e) {
+    //   // your function here...
+    //   run();
+    // });
+
     function toggleCode(lockUnlock) {
       
     }
@@ -143,11 +166,23 @@ Compile errors and warnings will appear in the terminal on the right side.
     });
     
     function saveVersion() {
-      version = firepad.getText();
+      if (firepad.getText() != '') {
+        version = firepad.getText();
+        toastr.success('Saved as last stable version', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
+      else {
+        toastr.warning('Empty editor, code not saved', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
     }
 
     function revertVersion() {
-      firepad.setText(version);
+      if (version != '') {
+        firepad.setText(version);
+        toastr.success('Reverted to last stable version', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
+      else {
+        toastr.warning('No stabled version saved yet', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+      }
     }
 
     function run() {
@@ -199,6 +234,37 @@ Compile errors and warnings will appear in the terminal on the right side.
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
+
+      // // overwrite keyboard shortcuts in ace
+      // var allCommands = editor.commands.byName; 
+      // editor.commands.removeCommands(allCommands);
+      // editor.commands.addCommand({
+      //   name: 'save',
+      //   bindKey: {win: 'Ctrl-Shift-S', mac: 'Command-Option-S'},
+      //   exec: function(editor) {
+      //     saveVersion();
+      //   },
+      //     readOnly: true
+      //   });
+
+      // editor.commands.addCommand({
+      //   name: 'revert',
+      //   bindKey: {win: 'Ctrl-Shift-D', mac: 'Command-Option-D'},
+      //   exec: function(editor) {
+      //     revertVersion();
+      //   },
+      //     readOnly: true
+      //   });
+
+      // editor.commands.addCommand({
+      //   name: 'run',
+      //   bindKey: {win: 'Ctrl-Shift-R', mac: 'Command-Shift-R'},
+      //   exec: function(editor) {
+      //     run();
+      //   },
+      //     readOnly: true
+      //   });
+
       session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
