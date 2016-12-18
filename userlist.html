@@ -56,6 +56,8 @@
         <a onclick="changeLanguage('html')">HTML</a>
       </div>
     </div>
+
+
     <hr>
   </div>
   <div id="firepad-container"></div>
@@ -97,6 +99,8 @@
         $("#console").css("height", "100%")
         $("#console").css("min-width", "250px")
         $("#console-text").html("iframe goes here")
+        $("#dropbtn").html("HTML &#9662;");
+
       } 
       else { // if (language == "javascript")
         $("#firepad-container").css("width", "85%")
@@ -106,6 +110,7 @@
         $("#console").css("height", "25%")
         $("#console").css("min-width", "600px")
         $("#console-text").html("Output:")
+        $("#dropbtn").html("Javascript &#9662;");
       }
     }
 
