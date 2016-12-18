@@ -58,10 +58,10 @@
       <div class="modal-body">
         <h4>Welcome to CodeLock!</h4>
         <p>Type your code in the middle of the screen. It recognizes JavaScript and HTML. Your cursor will match your user color.</p>
-        <p>Press the <strong>lock button</strong> in the top right of the screen. Any highlighted text will now be only edited by you until you press the button again to unlock. While code is locked by you, other users will not be able to edit it until you unlock.</p>
-        <p><strong>'Save'</strong> will saves the current code; <strong>'Revert'</strong> will change the current code back to the saved code.</p>
+        <p>Press the <strong>Lock button</strong> in the top right of the screen. Any highlighted text will now be only edited by you until you press the button again to <strong>unlock</strong>. While code is locked by you, other users will not be able to edit it until you unlock it.</p>
+        <p><strong>'Save'</strong> will save the current code; <strong>'Revert'</strong> will change the current code back to the most recently saved code.</p>
         <p><strong>'Run'</strong> evaluates and outputs Javascript or outputs HTML.</p>
-        <p><strong>'Select Language'</strong> is a drop down menu that allows you to select which language you're using.</p>
+        <p><strong>'Select Language'</strong> is a drop down menu that allows you to select which programming language you're using.</p>
         <p>You can edit your name by clicking on it and typing a new one. Rejoining the session will reset it.</p>
         <p>Use the chat box at the bottom left to talk. Click the chat bar to minimize/maximize.</p>
         <p>The output of 'Run' will print in the console below the coding area.</p>
@@ -84,11 +84,11 @@
 
 </div>
     <hr>
-    <button type="button" class="btn btn-default btn-lg btn-block" id="save-btn" onclick="saveVersion()">Save</button>
-    <button type="button" class="btn btn-default btn-lg" id="revert-btn" onclick="revertVersion()">Revert</button>
-    <button type="button" class="btn btn-default btn-lg" id="run-btn" onclick="run()">Run</button>
+    <button type="button" class="btn btn-default btn-lg btn-block" id="save-btn" title="Save the current state of the code." onclick="saveVersion()">Save</button>
+    <button type="button" class="btn btn-default btn-lg" id="revert-btn" title="Revert the current code to the last Saved version." onclick="revertVersion()">Revert</button>
+    <button type="button" class="btn btn-default btn-lg" id="run-btn" title="Run the current code and output."onclick="run()">Run</button>
     <div class="dropdown">
-      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Select Language &#9662;</button>
+      <button type="button" id="dropbtn" title="Select the language of the editor." class="btn btn-default btn-lg">Select Language &#9662;</button>
       <div class="dropdown-content">
         <a onclick="changeLanguage('javascript')">JavaScript</a>
         <a onclick="changeLanguage('html')">HTML</a>
@@ -101,8 +101,8 @@
   <div id="userlist"></div>
   <div id="chat_div"></div>
   <div id="lock">
-    <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128275;</button>
-    <!-- <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128274;</button> -->
+    <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Lock selected code to prevent others from modifying it." onclick="toggleCode()">&#128275;</button>
+    <!-- <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Unlock code to allow others to edit it" onclick="toggleCode()">&#128274;</button> -->
   </div>
   <iframe id="frame" style='display:none'></iframe>
   <div id="console" style='position: absolute; font-family: monospace; font-size: 15px; margin-left: 5px'>
