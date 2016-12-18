@@ -118,7 +118,9 @@ Compile errors and warnings will appear in the terminal on the right side.
     function changeLanguage(language) {
       session.setMode("ace/mode/" + language);
       if(language == "html") {
+
         programming_language = "html"
+        $("#dropbtn").html("HTML &#9662;");
         $("#firepad-container").css({"width": "45%", "height": "100%", "min-width": "300px"});
         $("#console").css({"width": "40%", "height": "100%", "min-width": "250px"});
         //$("#console-text").html("iframe goes here")
@@ -130,6 +132,7 @@ Compile errors and warnings will appear in the terminal on the right side.
       else { // if (language == "javascript")
         programming_language = "javascript"
         console.log(programming_language)
+        $("#dropbtn").html("Javascript &#9662;");
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
         $("#console").css({"width": "85%", "height": "25%", "min-width": "600px"});
         $("#console-text").html("Output:");
@@ -182,7 +185,9 @@ Compile errors and warnings will appear in the terminal on the right side.
                                         });
                                     }});
 
-      
+
+
+      $("#chat_div").chatbox("option", "boxManager").toggleContent();
 
       var setMessage = function(data) {
         var val = data.val();

@@ -6,6 +6,10 @@ body {
   margin: 0; height: 100%; position: relative;
 }
 
+#frame {
+  display: none;
+}
+
 #firepad-container {
   width: 85%;
   height: 75%;
