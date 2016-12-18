@@ -102,7 +102,8 @@ Compile errors and warnings will appear in the terminal on the right side.
     var version = '';
     var firepad;
     var firepadRef;
-    var session; 
+    var session;
+    programming_language = "javascript" 
     
     $(document).ready(function(){
       initFirepad();
@@ -117,15 +118,18 @@ Compile errors and warnings will appear in the terminal on the right side.
     function changeLanguage(language) {
       session.setMode("ace/mode/" + language);
       if(language == "html") {
+        programming_language = "html"
         $("#firepad-container").css({"width": "45%", "height": "100%", "min-width": "300px"});
         $("#console").css({"width": "40%", "height": "100%", "min-width": "250px"});
         //$("#console-text").html("iframe goes here")
-        $("#frame").attr("srcdoc", firepad.getText());
-        $("#frame").css({"width": "40%", "height": "100%", "min-width": "250px", "display": "initial", "right": "0px", "position":"absolute"});
         $("#console-text").css("display", "none");
         $("#lock-btn").css("display", "none");
+
+        $("#print-output").text('')
       }
       else { // if (language == "javascript")
+        programming_language = "javascript"
+        console.log(programming_language)
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
         $("#console").css({"width": "85%", "height": "25%", "min-width": "600px"});
         $("#console-text").html("Output:");
@@ -149,10 +153,18 @@ Compile errors and warnings will appear in the terminal on the right side.
     }
 
     function run() {
+      console.log("k")
       $('#print-output').text("")
+      if (programming_language == "javascript") {
+        console.log("l")
       var excute_code = firepad.getText()
       var result = eval(excute_code);
       $('#print-output').text(">>>  " + result)
+    }
+    else {
+      $("#frame").attr("srcdoc", firepad.getText());
+      $("#frame").css({"width": "40%", "height": "100%", "min-width": "250px", "display": "initial", "right": "0px", "position":"absolute"});
+    }
     }
 
     function initChat(chat_username) {
