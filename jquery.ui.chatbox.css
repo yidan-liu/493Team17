@@ -40,6 +40,7 @@
     padding: 2px;
     height: 50px;
     width: 96%;
+	font-size: 10px;
 }
 
 .ui-chatbox-icon {
@@ -51,9 +52,10 @@
 }
 
 .ui-chatbox-msg {
-    margin-top: 10px;
+    margin-top: 8px;
     float: left;
     clear: both;
+	font-size: 12px;
     /* Source: http://snipplr.com/view/10979/css-cross-browser-word-wrap */
     white-space: pre-wrap;      /* CSS3 */
     white-space: -moz-pre-wrap; /* Firefox */
