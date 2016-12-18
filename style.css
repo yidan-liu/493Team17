@@ -1,6 +1,10 @@
-html { height: 100%; }
-body { margin: 0; height: 100%; position: relative; }
-/* Height / width / positioning can be customized for your use case. For demo purposes, we make firepad fill the entire browser. */
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0; height: 100%; position: relative;
+}
 
 #firepad-container {
   width: 85%;
@@ -21,6 +25,7 @@ body { margin: 0; height: 100%; position: relative; }
   top: 10px;
   position: absolute;
   z-index: 10;
+  background-color: #ffe242;
 }
 
 #console {
@@ -39,6 +44,7 @@ body { margin: 0; height: 100%; position: relative; }
 #title {
   text-align: center;
 }
+
 
 .btn-lg {
   position: relative;
@@ -73,17 +79,36 @@ body { margin: 0; height: 100%; position: relative; }
     #console {margin-left: 175px; }
 }
 
+#dropbtn {
+    width: 100%;
+}
+
 .dropdown {
     position: relative;
     display: inline-block;
+    width: 100%;
+    min-width: 175px;
+}
+
+#save-btn {
+    background-color: #00ff80;
+}
+
+#revert-btn {
+    background-color: #ff0040;
+}
+
+#run-btn {
+    background-color: #00a0ff;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 100px;
+    min-width: 150px;
     z-index: 100;
+    right: 0px;
 }
 
 .dropdown-content a {
@@ -91,6 +116,7 @@ body { margin: 0; height: 100%; position: relative; }
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    text-align: center;
 }
 
 .dropdown-content a:hover {
@@ -105,4 +131,3 @@ body { margin: 0; height: 100%; position: relative; }
 .dropdown:hover #dropbtn {
     background-color: #616468;
 }
-
