@@ -84,11 +84,11 @@
 
 </div>
     <hr>
-    <button type="button" class="btn btn-default btn-lg btn-block" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
-    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
-    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="run-btn" onclick="run()">Run</button>
+    <button type="button" class="btn btn-default btn-lg btn-block" style="width:100%;" id="save-btn" title="Save the current state of the code" onclick="saveVersion()">Save</button>
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" title="Revert the current code to the last Saved state" onclick="revertVersion()">Revert</button>
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="run-btn" title="Run the current code and output"onclick="run()">Run</button>
     <div class="dropdown">
-      <button type="button" id="dropbtn" class="btn btn-default btn-lg">Select Language &#9662;</button>
+      <button type="button" id="dropbtn" title="Select the language you are coding in" class="btn btn-default btn-lg">Select Language &#9662;</button>
       <div class="dropdown-content">
         <a onclick="changeLanguage('javascript')">JavaScript</a>
         <a onclick="changeLanguage('html')">HTML</a>
@@ -101,8 +101,8 @@
   <div id="userlist"></div>
   <div id="chat_div"></div>
   <div id="lock">
-    <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128275;</button>
-    <!-- <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128274;</button> -->
+    <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Lock selected code to prevent others from modifying it" onclick="toggleCode()">&#128275;</button>
+    <!-- <button id="lock-btn" class="btn btn-default btn-lg" title="Click to Unlock code to allow others to edit it" onclick="toggleCode()">&#128274;</button> -->
   </div>
   <iframe id="frame" style='display:none'></iframe>
   <div id="console" style='position: absolute; font-family: monospace; font-size: 15px; margin-left: 5px'>
