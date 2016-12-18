@@ -84,7 +84,7 @@
     });
 
     function toggleCode(lockUnlock) {
-      
+
     }
     
     function changeLanguage(language) {
@@ -123,10 +123,19 @@
     }
 
     function run() {
-      $('#print-output').text("")
-      var excute_code = firepad.getText()
-      var result = eval(excute_code);
-      $('#print-output').text(">>>  " + result)
+      $('#console-text').empty();
+      var execute_code = firepad.getText()
+      logger(execute_code);
+      var result = eval(execute_code);
+      $('#console-text').append("<p style='font-family: monospace; font-size: 15px; margin-left: 5px'> >>>" +result+ "</p>");
+      // $('#print-output').text(">>>  " + result)
+    }
+
+    function logger(code) {
+      console.log = function(message) {
+        // $('#print-output').text(message);
+        $('#console-text').append("<p style='font-family: monospace; font-size: 15px; margin-left: 5px'>" +message+ "</p>");
+      }
     }
 
     function initChat(chat_username) {
@@ -189,17 +198,17 @@
 
       // Update chat userId once with assigned Guest name
       currUserRef.once("value").then(function(snapshot) {
-         console.log(snapshot.val()['name']);
+         // console.log(snapshot.val()['name']);
          username = snapshot.val()['name'];
          $("#chat_div").chatbox("option", "id", username);
       }, function (error) {
-         console.log("Error: " + error.code);
+         // console.log("Error: " + error.code);
       });
 
       // then track chat name changes 
       var changeName = function(data) {
         var val = data.val();
-        console.log(val);
+        // console.log(val);
         username = val;
         $("#chat_div").chatbox("option", "id", val);
       };
