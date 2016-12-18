@@ -112,7 +112,9 @@ Compile errors and warnings will appear in the terminal on the right side.
     $(document).ready(function(){
       initFirepad();
       initChat();
-
+      firepad.on('ready', function() {
+        saveVersion();
+      });
     });
 
     // // keyboard shortcuts
