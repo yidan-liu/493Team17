@@ -196,9 +196,13 @@ Compile errors and warnings will appear in the terminal on the right side.
         $('#console').empty();
         $('#console').append("<p id='console-text'>Console: </p>");
         var execute_code = firepad.getText()
-        logger(execute_code);
-        var result = eval(execute_code);
-        $('#console').append("<p id='console-text'> >>>  " +result+ "</p>");
+        logger(execute_code);        
+        try {
+          var result = eval(execute_code);
+          $('#console').append("<p id='console-text'> >>>  " +result+ "</p>");
+        } catch (e) {
+          $('#console').append("<p id='console-text'> >>>  " +e+ "</p>");
+        }
       }
       else {
         $("#frame").attr("srcdoc", firepad.getText());
