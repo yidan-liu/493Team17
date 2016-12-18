@@ -193,13 +193,15 @@ Compile errors and warnings will appear in the terminal on the right side.
     }
 
     function run() {
-      console.log("k")
       $('#print-output').text("")
       if (programming_language == "javascript") {
-        console.log("l")
       var excute_code = firepad.getText()
-      var result = eval(excute_code);
-      $('#print-output').text(">>>  " + result)
+      try {
+        var result = eval(excute_code);
+        $('#print-output').text(">>>  " + result)
+      } catch (e) {
+        $('#print-output').text(">>>  " + e);
+      }
     }
     else {
       $("#frame").attr("srcdoc", firepad.getText());
