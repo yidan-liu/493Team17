@@ -9,12 +9,10 @@ body {
 #firepad-container {
   width: 85%;
   height: 75%;
-/*  width: 45%;
-  height: 100%;*/
   margin-left: 15%;
-  border-top: 1px solid #c9c9c9;
-  border-right: 1px solid #c9c9c9;
-  border-left: 1px solid #c9c9c9;
+  border-top: 1px solid #FFF;
+  border-right: 1px solid #FFF;
+  border-left: 1px solid #FFF;
   position: absolute; left: 0; top: 0; bottom: 0; right: 0;
   min-width: 600px;
 }
@@ -25,21 +23,34 @@ body {
   top: 10px;
   position: absolute;
   z-index: 10;
-  background-color: #ffe242;
+  background-color: #FFF0C4;
+  border-color: #ECD080;
+}
+#lock-btn:hover {
+  background-color: #ECD080;
+}
+
+#help-btn {
+  font-size: 14px; 
+  font-weight: bold;
+  right: 10px;
+  bottom: 10px;
+  position: absolute;
+  z-index: 100;
 }
 
 #console {
   width: 85%;
   height: 25%;
-/*  width: 40%;
-  height: 100%;
-  border: 5px solid #c9c9c9;*/
   right: 0;
   margin-left: 15%;
-  border: 1px solid #c9c9c9;
+  border: 1px solid #FFF;
   position: absolute; bottom: 0;
   min-width: 600px;
+  background-color: #F0F0F0;
 }
+
+
 
 #title {
   text-align: center;
@@ -60,7 +71,7 @@ body {
 
 #userlist {
   position: absolute;
-  top: 375px;
+  top: 350px;
   height: 320px;
   width: 15%;
 }
@@ -72,11 +83,12 @@ body {
   position: absolute;
   min-width: 175px;
   float: left;
+  /*background-color: #C1D2DD;*/
 }
 
 @media screen and ( max-width: 1166px ){
     #firepad-container { margin-left: 175px; }
-    #console {margin-left: 175px; }
+    #console { left: 170px; }
 }
 
 #dropbtn {
@@ -88,18 +100,6 @@ body {
     display: inline-block;
     width: 100%;
     min-width: 175px;
-}
-
-#save-btn {
-    background-color: #00ff80;
-}
-
-#revert-btn {
-    background-color: #ff0040;
-}
-
-#run-btn {
-    background-color: #00a0ff;
 }
 
 .dropdown-content {
@@ -128,6 +128,8 @@ body {
     cursor: pointer;
 }
 
-.dropdown:hover #dropbtn {
+/*.dropdown:hover #dropbtn {
     background-color: #616468;
-}
+}*/
+
+

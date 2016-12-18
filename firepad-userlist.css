@@ -1,24 +1,22 @@
 .firepad-userlist {
   /* default height */
   height: 320px;
-  min-width: 175px;
-  border-top: 1px solid #c9c9c9;
-  border-bottom: 1px solid #c9c9c9; 
+  min-width: 175px; 
+  text-align: center;
 }
 
 .firepad-userlist {
   text-align: left;
-  font-family: 'Helvetica Neue', sans-serif;
+  /*font-family: 'Helvetica Neue', sans-serif;*/
   line-height: normal;
-
+  
 }
 
 .firepad-userlist-heading {
   margin: 20px 15px 0;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
-  border-bottom: 2px solid #c9c9c9;
-    border-radius: 25px;
+  text-align: center;
 }
 
 .firepad-userlist-users {
@@ -27,15 +25,13 @@
   right: 15px;
   top: 38px;
   bottom: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 
 .firepad-userlist-user {
   position: relative;
-  margin: 3px 0;
+  margin: 6px 0;
   height: 32px;
-  border-bottom: 1px solid #c9c9c9;
+  /*border-bottom: 1px solid #c9c9c9;*/
   padding-bottom: 5px;
 }
 
@@ -43,7 +39,7 @@
   display: inline-block;
   width: 32px;
   height: 32px;
-  border: 1px solid #ccc;
+  border:; 1px solid #ccc;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
@@ -55,11 +51,11 @@ input.firepad-userlist-name-input {
   top: 0;
   width: 105px;
   height: 20px;
-  border: 0;
-  border-bottom: 1px solid #d6d6d6;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
+  /*border: 0;*/
+  /*border-bottom: 1px solid #d6d6d6;*/
+  /*-webkit-border-radius: 0;*/
+  /*-moz-border-radius: 0;*/
+  /*border-radius: 0;*/
   font-size: 14px;
   line-height: 14px;
   padding: 1px;

@@ -41,10 +41,7 @@
 </head>
 
 <body>
-  <div id="left-panel">
-<div id="title">
-    <h1>CodeLock</h1>        
-<h4>By Team 17 <button id="help-btn" class="help-button" title="Welcome to CodeLock!
+  <button id="help-btn" class="help-button btn btn-default" title="Welcome to CodeLock!
 
 Type your code in the middle of the screen. It recognizes JavaScript and HTML. Your cursor will match your user color.
 
@@ -65,12 +62,17 @@ The output of 'Run' will print in the console below the coding area.
 Compile errors and warnings will appear in the terminal on the right side.
 
 ">?</button>
-</h4>
+  <div id="left-panel">
+<div id="title">
+    <h1>CodeLock</h1>        
+<h4>By Team 17 </h4>
+
+
 </div>
        
 
     <hr>
-    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
+    <button type="button" class="btn btn-default btn-lg btn-block" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="run-btn" onclick="run()">Run</button>
     <div class="dropdown">
@@ -81,7 +83,6 @@ Compile errors and warnings will appear in the terminal on the right side.
       </div>
     </div>
 
-
     <hr>
   </div>
   <div id="firepad-container"></div>
@@ -91,10 +92,10 @@ Compile errors and warnings will appear in the terminal on the right side.
     <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128275;</button>
     <!-- <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128274;</button> -->
   </div>
-  <iframe id="frame"></iframe>
-  <div id="console">
-    <p id="console-text">Output:</p>
-    <p id="print-output" style="font-family: monospace; font-size: 15px; margin-left: 5px"></p>
+  <iframe id="frame" style='display:none'></iframe>
+  <div id="console" style='position: absolute; font-family: monospace; font-size: 15px; margin-left: 5px'>
+    <p id='console-text' style="font-size: 15px; margin-left: 5px">Console: </p>
+    <p id='console-text'></p>
   </div>
   
   <script>
@@ -149,18 +150,19 @@ Compile errors and warnings will appear in the terminal on the right side.
     }
 
     function run() {
-      $('#console-text').empty();
+      $('#console').empty();
+      $('#console').append("<p id='console-text'>Console: </p>");
       var execute_code = firepad.getText()
       logger(execute_code);
       var result = eval(execute_code);
-      $('#console-text').append("<p style='font-family: monospace; font-size: 15px; margin-left: 5px'> >>>" +result+ "</p>");
+      $('#console').append("<p id='console-text'> >>>  " +result+ "</p>");
       // $('#print-output').text(">>>  " + result)
     }
 
     function logger(code) {
       console.log = function(message) {
         // $('#print-output').text(message);
-        $('#console-text').append("<p style='font-family: monospace; font-size: 15px; margin-left: 5px'>" +message+ "</p>");
+        $('#console').append("<p id='console-text'>" +message+ "</p>");
       }
     }
 
