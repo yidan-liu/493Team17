@@ -113,17 +113,17 @@
                 .focusin(function() {
                     // ui-state-highlight is not really helpful here
                     //self.uiChatbox.removeClass('ui-state-highlight');
-                    self.uiChatboxTitlebar.addClass('ui-state-focus');
+                    self.uiChatboxTitlebar.addClass('ui-state-focus-plain');
                 })
                 .focusout(function() {
-                    self.uiChatboxTitlebar.removeClass('ui-state-focus');
+                    self.uiChatboxTitlebar.removeClass('ui-state-focus-plain');
                 }),
             // titlebar
             uiChatboxTitlebar = (self.uiChatboxTitlebar = $('<div></div>'))
-                .addClass('ui-widget-header ' +
+                .addClass('ui-widget-header-plain ' +
                           'ui-corner-top ' +
                           'ui-chatbox-titlebar ' +
-                          'ui-dialog-header' // take advantage of dialog header style
+                          'ui-dialog-header-plain' // take advantage of dialog header style
                          )
                 .click(function(event) {
                     self.toggleContent(event);
@@ -203,12 +203,12 @@
                     }
                 })
                 .focusin(function() {
-                    uiChatboxInputBox.addClass('ui-chatbox-input-focus');
+                    uiChatboxInputBox.addClass('ui-chatbox-input-focus-plain');
                     var box = $(this).parent().prev();
                     box.scrollTop(box.get(0).scrollHeight);
                 })
                 .focusout(function() {
-                    uiChatboxInputBox.removeClass('ui-chatbox-input-focus');
+                    uiChatboxInputBox.removeClass('ui-chatbox-input-focus-plain');
                 });
 
             // disable selection

@@ -144,3 +144,21 @@ body {
 }*/
 
 
+.ui-widget-header-plain {
+                border: 1px solid #aaaaaa;
+                color: #222222;
+                background-color: #ffffff;
+            }
+
+
+.ui-chatbox-input-focus-plain {
+  background-color: #ffffff;
+}
+
+.ui-dialog-header-plain{
+  background-color: #ffffff;
+}
+
+.ui-state-focus-plain{
+  background-color: #ffffff;
+}
