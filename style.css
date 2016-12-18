@@ -6,6 +6,10 @@ body {
   margin: 0; height: 100%; position: relative;
 }
 
+#frame {
+  display: none;
+}
+
 #firepad-container {
   width: 85%;
   height: 75%;
@@ -25,6 +29,7 @@ body {
   top: 10px;
   position: absolute;
   z-index: 10;
+  background-color: #ffe242;
 }
 
 #console {
@@ -43,6 +48,7 @@ body {
 #title {
   text-align: center;
 }
+
 
 .btn-lg {
   position: relative;
@@ -86,6 +92,18 @@ body {
     display: inline-block;
     width: 100%;
     min-width: 175px;
+}
+
+#save-btn {
+    background-color: #00ff80;
+}
+
+#revert-btn {
+    background-color: #ff0040;
+}
+
+#run-btn {
+    background-color: #00a0ff;
 }
 
 .dropdown-content {
