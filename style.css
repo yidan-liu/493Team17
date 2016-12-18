@@ -34,12 +34,12 @@ body {
   top: 10px;
   position: absolute;
   z-index: 10;
-  background-color: #FFF0C4;
-  border-color: #ECD080;
+  background-color: #FFDAA7;
+  border-color: #AA7A39;
 }
 
 #lock-btn:hover {
-  background-color: #ECD080;
+  background-color: #AA7A39;
 }
 
 #save-btn, #revert-btn, #run-btn {
@@ -64,6 +64,12 @@ body {
   bottom: 10px;
   position: absolute;
   z-index: 100;
+  background-color: #708CA5;
+  color: #F9FCFF;
+  border: 1px solid #2A4F6E;
+}
+#help-btn:hover {
+  background-color: #2A4F6E;
 }
 
 #console {
@@ -134,6 +140,7 @@ body {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
+    width: inherit;
     min-width: 150px;
     z-index: 100;
     right: 0px;
