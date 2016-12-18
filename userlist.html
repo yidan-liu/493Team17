@@ -42,13 +42,37 @@
 
 <body>
   <div id="left-panel">
-    <h1 id="title">CodeLock</h1>
-    <h4 id="title">By Team 17</h4>    
+<div id="title">
+    <h1>CodeLock</h1>        
+<h4>By Team 17 <button id="help-btn" class="help-button" title="Welcome to CodeLock!
+
+Type your code in the middle of the screen. It recognizes JavaScript and HTML. Your cursor will match your user color.
+
+Press the lock button in the top right of the screen. Any highlighted text will now be only edited by you until you press the button again to unlock. While code is locked by you, other users will not be able to edit it until you unlock.
+
+'Save' will saves the current code; 'Revert' will change the current code back to the saved code.
+
+'Run' evaluates and outputs Javascript or outputs HTML.
+
+'Choose Language' is a drop down menu that allows you to select which language you're using.
+
+You can edit your name by clicking on it and typing a new one. Rejoining the session will reset it.
+
+Use the chat box at the bottom left to talk. Click the chat bar to minimize/maximize.
+
+The output of 'Run' will print in the console below the coding area.
+
+Compile errors and warnings will appear in the terminal on the right side.
+
+">?</button>
+</h4>
+</div>
+       
 
     <hr>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
-    <button type="button" class="btn btn-default btn-lg" onclick="run()" style="width:100%;">Run</button>
+    <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="run-btn" onclick="run()">Run</button>
     <div class="dropdown">
       <button type="button" id="dropbtn" class="btn btn-default btn-lg">Select Language &#9662;</button>
       <div class="dropdown-content">
@@ -67,7 +91,8 @@
     <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128275;</button>
     <!-- <button id="lock-btn" class="btn btn-default btn-lg" onclick="toggleCode()">&#128274;</button> -->
   </div>
-  <div id="console">
+  
+<div id="console">
     <p id="console-text">Output:</p>
     <p id="print-output" style="font-family: monospace; font-size: 15px; margin-left: 5px"></p>
   </div>
