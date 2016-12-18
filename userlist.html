@@ -152,10 +152,10 @@ Compile errors and warnings will appear in the terminal on the right side.
         //$("#console-text").html("iframe goes here")
         $("#console-text").css("display", "none");
         $("#lock-btn").css("display", "none");
+        $("#console").empty()
       }
       else { // if (language == "javascript")
         programming_language = "javascript"
-        console.log(programming_language)
         $("#dropbtn").html("Javascript &#9662;");
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
         $("#console").css({"width": "85%", "height": "25%", "min-width": "600px", "background-color":"#F0F0F0", "border": "1px solid #FFF"});
