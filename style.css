@@ -37,8 +37,24 @@ body {
   background-color: #FFDAA7;
   border-color: #AA7A39;
 }
+
 #lock-btn:hover {
   background-color: #AA7A39;
+}
+
+#save-btn, #revert-btn, #run-btn {
+  border: 1px solid #042037;
+  color: #042037;
+}
+
+#save-btn:hover {
+  background-color: #F9FCFF;
+}
+#revert-btn:hover {
+  background-color: #F9FCFF;
+}
+#run-btn:hover {
+  background-color: #F9FCFF;
 }
 
 #help-btn {
@@ -100,7 +116,6 @@ body {
   position: absolute;
   min-width: 175px;
   float: left;
-  /*background-color: #C1D2DD;*/
 }
 
 @media screen and ( max-width: 1166px ){
@@ -110,6 +125,8 @@ body {
 
 #dropbtn {
     width: 100%;
+    border: 1px solid #042037;
+    color: #042037;
 }
 
 .dropdown {
@@ -138,16 +155,15 @@ body {
 }
 
 .dropdown-content a:hover {
-  background-color: #f1f1f1
+    background-color: #f1f1f1
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
     cursor: pointer;
+
 }
 
-/*.dropdown:hover #dropbtn {
-    background-color: #616468;
-}*/
-
-
+.dropdown:hover #dropbtn {
+  background-color: #6F8CA5;
+}

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.2/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.4.6/mousetrap.min.js"></script> -->
     <link type="text/css" href="jquery.ui.chatbox.css" rel="stylesheet" />
     <script type="text/javascript" src="jquery.ui.chatbox.js"></script>
@@ -45,27 +46,36 @@
 </head>
 
 <body>
-  <button id="help-btn" class="help-button btn btn-default" title="Welcome to CodeLock!
+  <button id="help-btn" class="help-button btn btn-default" data-toggle="modal" data-target="#myModal">?</button>
 
-Type your code in the middle of the screen. It recognizes JavaScript and HTML. Your cursor will match your user color.
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Welcome to CodeLock!</h4>
+      </div>
+      <div class="modal-body">
+<h4>Welcome to CodeLock!</h4>
+<p>Type your code in the middle of the screen. It recognizes JavaScript and HTML. Your cursor will match your user color.</p>
+<p>Press the <strong>lock button</strong> in the top right of the screen. Any highlighted text will now be only edited by you until you press the button again to unlock. While code is locked by you, other users will not be able to edit it until you unlock.</p>
+<p><strong>'Save'</strong> will saves the current code; <strong>'Revert'</strong> will change the current code back to the saved code.</p>
+<p><strong>'Run'</strong> evaluates and outputs Javascript or outputs HTML.</p>
+<p><strong>'Select Language'</strong> is a drop down menu that allows you to select which language you're using.</p>
+<p>You can edit your name by clicking on it and typing a new one. Rejoining the session will reset it.</p>
+<p>Use the chat box at the bottom left to talk. Click the chat bar to minimize/maximize.</p>
+<p>The output of 'Run' will print in the console below the coding area.</p>
+<p>Compile errors and warnings will also appear in the console.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
 
-Press the lock button in the top right of the screen. Any highlighted text will now be only edited by you until you press the button again to unlock. While code is locked by you, other users will not be able to edit it until you unlock.
+  </div>
+</div>
 
-'Save' will saves the current code; 'Revert' will change the current code back to the saved code.
 
-'Run' evaluates and outputs Javascript or outputs HTML.
-
-'Choose Language' is a drop down menu that allows you to select which language you're using.
-
-You can edit your name by clicking on it and typing a new one. Rejoining the session will reset it.
-
-Use the chat box at the bottom left to talk. Click the chat bar to minimize/maximize.
-
-The output of 'Run' will print in the console below the coding area.
-
-Compile errors and warnings will appear in the terminal on the right side.
-
-">?</button>
   <div id="left-panel">
 <div id="title">
     <h1 style="color: #042037">CodeLock</h1>        
@@ -73,8 +83,6 @@ Compile errors and warnings will appear in the terminal on the right side.
 
 
 </div>
-       
-
     <hr style="border: 1px solid #708CA5">
     <button type="button" class="btn btn-default btn-lg btn-block" style="width:100%;" id="save-btn" onclick="saveVersion()">Save</button>
     <button type="button" class="btn btn-default btn-lg" style="width:100%;" id="revert-btn" onclick="revertVersion()">Revert</button>
@@ -118,25 +126,6 @@ Compile errors and warnings will appear in the terminal on the right side.
       });
     });
 
-    // // keyboard shortcuts
-    // // 'command+shift+s' to save
-    // Mousetrap.bind('command+shift+s', function(e) {
-    //   // your function here...
-    //   saveVersion();
-    // });
-
-    // // 'command+shift+d' to revert
-    // Mousetrap.bind('command+shift+d', function(e) {
-    //   // your function here...
-    //   revertVersion();
-    // });
-
-    // // 'command+shift+r' to run
-    // Mousetrap.bind('command+shift+r', function(e) {
-    //   // your function here...
-    //   run();
-    // });
-
     function toggleCode(lockUnlock) {
 
     }
@@ -152,10 +141,10 @@ Compile errors and warnings will appear in the terminal on the right side.
         //$("#console-text").html("iframe goes here")
         $("#console-text").css("display", "none");
         $("#lock-btn").css("display", "none");
+        $("#console").empty()
       }
       else { // if (language == "javascript")
         programming_language = "javascript"
-        // console.log(programming_language)
         $("#dropbtn").html("Javascript &#9662;");
         $("#firepad-container").css({"width": "85%", "height": "75%", "min-width": "600px"});
         $("#console").css({"width": "85%", "height": "25%", "min-width": "600px", "background-color":"#F0F0F0", "border": "1px solid #FFF"});
@@ -258,37 +247,6 @@ Compile errors and warnings will appear in the terminal on the right side.
       //// Create ACE
       var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
-
-      // // overwrite keyboard shortcuts in ace
-      // var allCommands = editor.commands.byName; 
-      // editor.commands.removeCommands(allCommands);
-      // editor.commands.addCommand({
-      //   name: 'save',
-      //   bindKey: {win: 'Ctrl-Shift-S', mac: 'Command-Option-S'},
-      //   exec: function(editor) {
-      //     saveVersion();
-      //   },
-      //     readOnly: true
-      //   });
-
-      // editor.commands.addCommand({
-      //   name: 'revert',
-      //   bindKey: {win: 'Ctrl-Shift-D', mac: 'Command-Option-D'},
-      //   exec: function(editor) {
-      //     revertVersion();
-      //   },
-      //     readOnly: true
-      //   });
-
-      // editor.commands.addCommand({
-      //   name: 'run',
-      //   bindKey: {win: 'Ctrl-Shift-R', mac: 'Command-Shift-R'},
-      //   exec: function(editor) {
-      //     run();
-      //   },
-      //     readOnly: true
-      //   });
-
       session = editor.getSession();
       session.setUseWrapMode(true);
       session.setUseWorker(false);
@@ -298,7 +256,7 @@ Compile errors and warnings will appear in the terminal on the right side.
       var userId = Math.floor(Math.random() * 9999999999).toString();
       //// Create Firepad.
       firepad = Firepad.fromACE(firepadRef, editor, {
-        defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}',
+        defaultText: '// JavaScript Editing with CodeLock!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}',
         userId:userId
       });
       //// Create FirepadUserList (with our desired userId).
