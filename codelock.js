@@ -8,14 +8,18 @@ var ranges
 var locker;
 var user;
 var lockowner;
+var session;
+var lockref;
 
 
 
 //sets userid for the session, sets listener for db changes, triggers function to fill in existing locks
-function initlock(userid) {
+function initlock(userid, s, lr) {
     console.log("userid: " + userid);
+    lockref = lr;
     user = userid;
-    firebase.database().ref('codelock').on('value', practice);
+    session = s;
+    lockref.on('value', practice);
 }
 
 
@@ -119,7 +123,7 @@ function writeLockData() {
       var range = ace.edit("firepad-container").getSelectionRange();
       var rangestring = range['start']['row'] + " " + range['start']['column'] + " " + range['end']['row'] + " " + range['end']['column'];
       console.log(rangestring);
-      firebase.database().ref('codelock').set({
+      lockref.set({
         username: user,
         range: rangestring,
         color: "blue"
@@ -129,9 +133,9 @@ function writeLockData() {
 
 //allows you to overwrite the current lock in the db to destroy it if you are the owner
 function deleteLockData() {
-    set = false;
     if(lockowner == user){
-        firebase.database().ref('codelock').set({
+        set = false;
+        lockref.set({
             username: "none",
             range: "none",
             color: "none"
@@ -143,7 +147,7 @@ function deleteLockData() {
 //destroys lock regardless of owner, only for testing
 function deleteOverride() {
         set = false;
-        firebase.database().ref('codelock').set({
+        lockref.set({
             username: "none",
             range: "none",
             color: "none"

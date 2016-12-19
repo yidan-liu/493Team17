@@ -130,7 +130,9 @@
     });
 
     function initlocktrigger(){
-      initlock(lockid);
+      var lockRef = firepadRef.child('codelock');
+      lockRef.off();
+      initlock(lockid, session, lockRef);
     }
 
     function toggleCode() {
@@ -190,6 +192,7 @@
       if (version != '') {
         firepad.setText(version);
         toastr.success('Reverted to last stable version', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
+        deleteOverride();
       }
       else {
         toastr.warning('No stabled version saved yet', '', {timeOut: 2000, positionClass: "toast-bottom-center"});
