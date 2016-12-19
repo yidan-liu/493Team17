@@ -122,13 +122,9 @@ function writeLockData() {
         set = true;
       var range = ace.edit("firepad-container").getSelectionRange();
       var rangestring = range['start']['row'] + " " + range['start']['column'] + " " + range['end']['row'] + " " + range['end']['column'];
-<<<<<<< HEAD
       console.log(rangestring);
       lockref.set({
-=======
-      //console.log(rangestring);
-      firebase.database().ref('codelock').set({
->>>>>>> 6bcc3d25dc83b8e9124288865e0e0aab5303c3f5
+
         username: user,
         range: rangestring,
         color: "blue"
