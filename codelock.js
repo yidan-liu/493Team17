@@ -15,7 +15,6 @@ var lockref;
 
 //sets userid for the session, sets listener for db changes, triggers function to fill in existing locks
 function initlock(userid, s, lr) {
-    console.log("userid: " + userid);
     lockref = lr;
     user = userid;
     session = s;
@@ -122,7 +121,7 @@ function writeLockData() {
         set = true;
       var range = ace.edit("firepad-container").getSelectionRange();
       var rangestring = range['start']['row'] + " " + range['start']['column'] + " " + range['end']['row'] + " " + range['end']['column'];
-      console.log(rangestring);
+      // console.log(rangestring);
       lockref.set({
 
         username: user,
